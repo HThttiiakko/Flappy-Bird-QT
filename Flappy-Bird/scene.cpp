@@ -14,7 +14,6 @@ Scene::Scene(QObject *parent) : QGraphicsScene(parent),startsign(0),gameoverbool
     startImage->setZValue(100);//放在最顶层
 
     gameoverImage = new QGraphicsPixmapItem(QPixmap(":/new/prefix1/gameover.png"));
-    nankaiImage = new QGraphicsPixmapItem(QPixmap(":/new/prefix1/nankai.png"));
 
 
 
@@ -25,9 +24,9 @@ Scene::Scene(QObject *parent) : QGraphicsScene(parent),startsign(0),gameoverbool
 
 void Scene::birddef()
 {
-    bird = new birditem(QPixmap(":/new/prefix1/0.png"));
+    bird = new birditem(QPixmap(":/new/prefix1/bird01.png"));
     addItem(bird);
-    bird->setZValue(20);
+    bird->setZValue(200);
 }
 
 void Scene::mainstart()
@@ -116,7 +115,10 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 if(event->button()==Qt::LeftButton){
     bird->jump();
 }
+if(event->button()==Qt::RightButton){
+    bird->jump();
 //若游戏已结束 则鼠标左键不再有任何作用
     }
 QGraphicsScene::mousePressEvent(event);
+    }
 }

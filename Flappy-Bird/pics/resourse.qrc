@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/new/prefix1">
-        <file>bg.png</file>
+        <file>background02.png</file>
         <file>gameover.png</file>
         <file>ground.png</file>
         <file>pipe.png</file>
@@ -8,5 +8,6 @@
         <file>bird01.png</file>
         <file>bird02.png</file>
         <file>bird03.png</file>
+        <file>background01.png</file>
     </qresource>
 </RCC>
