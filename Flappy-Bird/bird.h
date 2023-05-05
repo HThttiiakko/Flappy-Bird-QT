@@ -36,10 +36,10 @@ public slots:
     void falling();
 
 private:
-    bool wingdirect;//0 down 1 up
-    int wingpos;//0 up 1 middle 2 down
-    QPropertyAnimation* yani;
-    QPropertyAnimation* rotationani;
+    bool wingdirect;//0 下 1 上
+    int wingpos;//0 向上 1 中間 2 向下
+    QPropertyAnimation* fallanimotion;
+    QPropertyAnimation* spinanimotion;
     qreal m_y;
     qreal m_rotation;
     qreal groundline;

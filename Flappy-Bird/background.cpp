@@ -10,28 +10,28 @@
         setPos(0, 500);
 
         //生成地面向左移动的动画
-        groundani = new QPropertyAnimation(this, "groundx", this);
-        groundani->setStartValue(0);
-        groundani->setEndValue(-100);
-        groundani->setDuration(1000);
-        groundani->setLoopCount(-1);
-        groundani->start();
+        groundanimotion = new QPropertyAnimation(this, "groundx", this);
+        groundanimotion->setStartValue(0);
+        groundanimotion->setEndValue(-100);
+        groundanimotion->setDuration(1000);
+        groundanimotion->setLoopCount(-1);
+        groundanimotion->start();
 
     }
 
     qreal groundItem::groundx() const
     {
-        return m_groundx;
+        return x_groundx;
     }
 
 
     void groundItem::setgroundx(qreal groundx)
     {
-        m_groundx = groundx;
+        x_groundx = groundx;
         setPos(groundx, y());
     }
 
     void groundItem::groundstop()
     {
-        groundani->stop();
+        groundanimotion->stop();
     }

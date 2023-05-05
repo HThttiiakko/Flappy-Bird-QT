@@ -47,18 +47,18 @@ birditem::birditem(QPixmap pixmap, QObject *parent) : QObject(parent),
     groundline=scenePos().y()+485;
 
     //设置鸟的坠落
-    yani = new QPropertyAnimation(this,"y",this);
-    yani->setStartValue(scenePos().y());
-    yani->setEndValue(groundline);
-    yani->setEasingCurve(QEasingCurve::InQuad);
-    yani->setDuration(1000);
+    fallanimotion = new QPropertyAnimation(this,"y",this);
+    fallanimotion->setStartValue(scenePos().y());
+    fallanimotion->setEndValue(groundline);
+    fallanimotion->setEasingCurve(QEasingCurve::InQuad);
+    fallanimotion->setDuration(1000);
 
     //设置坠落时的体态——嘴朝地
-    rotationani = new QPropertyAnimation(this,"rotation",this);
-    rotationani->setStartValue(rotation());
-    rotationani->setEndValue(90);
-    rotationani->setEasingCurve(QEasingCurve::InQuad);
-    rotationani->setDuration(1200);
+    spinanimotion = new QPropertyAnimation(this,"rotation",this);
+    spinanimotion->setStartValue(rotation());
+    spinanimotion->setEndValue(90);
+    spinanimotion->setEasingCurve(QEasingCurve::InQuad);
+    spinanimotion->setDuration(1200);
 
 
 }
@@ -76,37 +76,37 @@ qreal birditem::rotation() const
 
 void birditem::jump()
 {
-    yani->stop();
-    rotationani->stop();
+    fallanimotion->stop();
+    spinanimotion->stop();
 
     //让鸟跳跃完成后自然下坠
-    connect(yani,&QPropertyAnimation::finished,[=]{falling();});
+    connect(fallanimotion,&QPropertyAnimation::finished,[=]{falling();});
 
     //设置鸟的跳跃动画
-    yani->setStartValue(y());
-    yani->setEndValue(y() - 80);
-    yani->setEasingCurve(QEasingCurve::OutQuad);
-    yani->setDuration(255);
-    yani->start();
+    fallanimotion->setStartValue(y());
+    fallanimotion->setEndValue(y() - 80);
+    fallanimotion->setEasingCurve(QEasingCurve::OutQuad);
+    fallanimotion->setDuration(255);
+    fallanimotion->start();
 
     //设置鸟的跳跃旋转动画
-    rotationani->setStartValue(rotation());
-    rotationani->setEndValue(-20);
-    rotationani->setEasingCurve(QEasingCurve::InOutQuad);
-    rotationani->setDuration(200);
-    rotationani->start();
+    spinanimotion->setStartValue(rotation());
+    spinanimotion->setEndValue(-20);
+    spinanimotion->setEasingCurve(QEasingCurve::InOutQuad);
+    spinanimotion->setDuration(200);
+    spinanimotion->start();
 }
 
 void birditem::birdstart()
 {
-    yani->start();
-    rotationani->start();
+    fallanimotion->start();
+    spinanimotion->start();
 }
 
 void birditem::birdstop()
 {
-    yani->stop();
-    rotationani->stop();
+    fallanimotion->stop();
+    spinanimotion->stop();
 }
 
 //碰撞检测函数
@@ -151,18 +151,18 @@ void birditem::falling()
 {
     if(y()<(this->scenePos().y()+460))
     {
-    rotationani->stop();
+    spinanimotion->stop();
 
-    yani->setStartValue(y());
-    yani->setEndValue(groundline);
-    yani->setEasingCurve(QEasingCurve::InQuad);
-    yani->setDuration(1100);
-    yani->start();
+    fallanimotion->setStartValue(y());
+    fallanimotion->setEndValue(groundline);
+    fallanimotion->setEasingCurve(QEasingCurve::InQuad);
+    fallanimotion->setDuration(1100);
+    fallanimotion->start();
 
-    rotationani->setStartValue(rotation());
-    rotationani->setEndValue(90);
-    rotationani->setEasingCurve(QEasingCurve::InQuad);
-    rotationani->setDuration(1000);
-    rotationani->start();
+    spinanimotion->setStartValue(rotation());
+    spinanimotion->setEndValue(90);
+    spinanimotion->setEasingCurve(QEasingCurve::InQuad);
+    spinanimotion->setDuration(1000);
+    spinanimotion->start();
     }
 }
