@@ -1,8 +1,8 @@
-#include "widget.h"
-#include "ui_widget.h"
-#include "pipe.h"
-#include "bird.h"
-#include "background.h"
+#include <widget.h>
+#include <ui_widget.h>
+#include <pipe.h>
+#include <bird.h>
+#include <background.h>
 #include <QGraphicsPixmapItem>
 #include <QTime>
 
@@ -24,14 +24,14 @@ Widget::Widget(QWidget *parent)
     QGraphicsPixmapItem* pixItem;
 
     //根据时间更换早晚背景
-    if(current_time.hour()>18&&current_time.hour()<6)
+    if(current_time.hour()>=18||current_time.hour()<=6)
         pixItem = new QGraphicsPixmapItem(QPixmap(":/new/prefix1/background01.png"));
 
-    else if(current_time.hour()>=6&&current_time.hour()<=18)
+    else
         pixItem = new QGraphicsPixmapItem(QPixmap(":/new/prefix1/background02.png"));
 
     scene->addItem(pixItem);
-    pixItem->setPos(QPointF(0,0) );
+    pixItem->setPos(QPointF(0,0));
     //游戏背景载入
 
     scene->birddef();

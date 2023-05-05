@@ -6,6 +6,7 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsPixmapItem>
 #include <QPropertyAnimation>
+#include <scene.h>
 
 class PipeItem : public QObject , public QGraphicsItemGroup
 {
@@ -30,11 +31,12 @@ private slots:
 
 private:
     bool collision();
-    QGraphicsPixmapItem* apipe;
+    QGraphicsPixmapItem* newpipe;
     qreal m_x;
-    QPropertyAnimation* xani;
+    QPropertyAnimation* pipexanimotion;
     int ramy;
     bool pass;
+    int score = 0;
 };
 
 #endif // PIPEITEM_H

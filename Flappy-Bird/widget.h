@@ -3,7 +3,7 @@
 
 #include <QDebug>
 #include <QWidget>
-#include "scene.h"
+#include <scene.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }

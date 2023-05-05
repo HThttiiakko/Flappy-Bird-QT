@@ -1,31 +1,33 @@
-#include "pipe.h"
+#include <pipe.h>
 #include <bird.h>
-#include "scene.h"
+#include <scene.h>
 #include <QPointF>
 #include <time.h>
+
 PipeItem::PipeItem() :
-    apipe(new QGraphicsPixmapItem(QPixmap(":/new/prefix1/pipe.png"))),pass(0)
+    newpipe(new QGraphicsPixmapItem(QPixmap(":/new/prefix1/pipe.png"))),pass(0)
 {
-    //随机生成[-480,-200]的数字，从而随机生成右侧新管道的位置
+    //随机生成右侧新管道的上下位置
     ramy=-(200+rand()%(480-200+1));
-    apipe->setPos(500,ramy);
+    newpipe->setPos(580,ramy);
 
     //创造管道水平向左移动动画
-    xani = new QPropertyAnimation(this,"x",this);
-    xani->setStartValue(480);
-    xani->setEndValue(-200);
-    xani->setEasingCurve(QEasingCurve::Linear);
-    xani->setDuration(3000);
+    pipexanimotion = new QPropertyAnimation(this,"x",this);
+    pipexanimotion->setStartValue(580);
+    pipexanimotion->setEndValue(-100);
+    pipexanimotion->setDuration(3500);
+    pipexanimotion->start();
 
-    //当动画结束 移除管道
-    connect(xani, &QPropertyAnimation::finished, [=](){
+    //当动画结束 移除管道 有利于节省空间
+    connect(pipexanimotion, &QPropertyAnimation::finished, [=](){
         scene()->removeItem(this);
         delete this;
     });
 
-    xani->start();
-    addToGroup(apipe);
+    addToGroup(newpipe);
 }
+
+
 
 PipeItem::~PipeItem()
 {
@@ -38,7 +40,7 @@ qreal PipeItem::x() const
 
 void PipeItem::pipestop()
 {
-    xani->stop();
+    pipexanimotion->stop();
 }
 
 void PipeItem::setX(qreal x)
@@ -46,14 +48,26 @@ void PipeItem::setX(qreal x)
     m_x = x;
 
     //如果小鸟通过了管道，增加1分
-    if(x<0&&!pass){
+    if(x<-98&&!pass){
         pass=1;
         QGraphicsScene* nowscene=scene();
                 Scene* myscene = dynamic_cast<Scene *>(nowscene);
                 if(nowscene){
+                    score++;
                     myscene->Scoreadd();
                 }
     }
+
+    if(score<=20)//当你的分数增加时管道的移动速度变快，难度增加
+        pipexanimotion->setDuration(3500);
+    else if(score>20)
+        pipexanimotion->setDuration(3000);
+    else if(score>50)
+        pipexanimotion->setDuration(2000);
+    else if(score>100)
+        pipexanimotion->setDuration(1000);
+    else if(score>200)
+        pipexanimotion->setDuration(500);
 
     //如果小鸟撞上了管道，发出碰撞信号
     if(collision()){
@@ -65,7 +79,7 @@ void PipeItem::setX(qreal x)
 //碰撞检测函数
 bool PipeItem::collision()
 {
-    QList<QGraphicsItem*> collidingItems = apipe->collidingItems();
+    QList<QGraphicsItem*> collidingItems = newpipe->collidingItems();
       foreach (QGraphicsItem * item , collidingItems){
           birditem * birdie = dynamic_cast<birditem*>(item);
           if(birdie){

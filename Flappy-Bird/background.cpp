@@ -1,5 +1,5 @@
-#include "background.h"
-#include "bird.h"
+#include <background.h>
+#include <bird.h>
 #include <QPixmap>
 #include <QTimer>
 #include <QPropertyAnimation>

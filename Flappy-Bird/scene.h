@@ -5,8 +5,8 @@
 #include <QTimer>
 #include <QGraphicsSceneMouseEvent>
 #include <bird.h>
-#include "pipe.h"
-#include "background.h"
+#include <pipe.h>
+#include <background.h>
 #include <QGraphicsPixmapItem>
 #include <QMouseEvent>
 
@@ -27,7 +27,6 @@ private:
     birditem* bird;
     QGraphicsPixmapItem* startImage;
     QGraphicsPixmapItem* gameoverImage;
-    QGraphicsPixmapItem* nankaiImage;
     bool startsign;
     void gameover();
     groundItem* ground;

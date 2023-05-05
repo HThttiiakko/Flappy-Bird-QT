@@ -1,7 +1,8 @@
-#include "bird.h"
-#include "background.h"
+#include <bird.h>
+#include <background.h>
 #include <QTimer>
 #include <QGraphicsScene>
+#include <scene.h>
 
 //扇动翅膀函数
 void birditem::wings()
@@ -47,11 +48,11 @@ birditem::birditem(QPixmap pixmap, QObject *parent) : QObject(parent),
     groundline=scenePos().y()+485;
 
     //设置鸟的坠落
-    fallanimotion = new QPropertyAnimation(this,"y",this);
-    fallanimotion->setStartValue(scenePos().y());
-    fallanimotion->setEndValue(groundline);
-    fallanimotion->setEasingCurve(QEasingCurve::InQuad);
-    fallanimotion->setDuration(1000);
+    yanimotion = new QPropertyAnimation(this,"y",this);
+    yanimotion->setStartValue(scenePos().y());
+    yanimotion->setEndValue(groundline);
+    yanimotion->setEasingCurve(QEasingCurve::InQuad);
+    yanimotion->setDuration(1000);
 
     //设置坠落时的体态——嘴朝地
     spinanimotion = new QPropertyAnimation(this,"rotation",this);
@@ -74,24 +75,24 @@ qreal birditem::rotation() const
     return m_rotation;
 }
 
-void birditem::jump()
+void birditem::leap()
 {
-    fallanimotion->stop();
+    yanimotion->stop();
     spinanimotion->stop();
 
     //让鸟跳跃完成后自然下坠
-    connect(fallanimotion,&QPropertyAnimation::finished,[=]{falling();});
+    connect(yanimotion,&QPropertyAnimation::finished,[=]{falling();});
 
     //设置鸟的跳跃动画
-    fallanimotion->setStartValue(y());
-    fallanimotion->setEndValue(y() - 80);
-    fallanimotion->setEasingCurve(QEasingCurve::OutQuad);
-    fallanimotion->setDuration(255);
-    fallanimotion->start();
+    yanimotion->setStartValue(y());
+    yanimotion->setEndValue(y() - 70);
+    yanimotion->setEasingCurve(QEasingCurve::OutQuad);
+    yanimotion->setDuration(320);
+    yanimotion->start();
 
     //设置鸟的跳跃旋转动画
     spinanimotion->setStartValue(rotation());
-    spinanimotion->setEndValue(-20);
+    spinanimotion->setEndValue(-45);
     spinanimotion->setEasingCurve(QEasingCurve::InOutQuad);
     spinanimotion->setDuration(200);
     spinanimotion->start();
@@ -99,13 +100,14 @@ void birditem::jump()
 
 void birditem::birdstart()
 {
-    fallanimotion->start();
+    yanimotion->setStartValue(250);
+    yanimotion->start();
     spinanimotion->start();
 }
 
 void birditem::birdstop()
 {
-    fallanimotion->stop();
+    yanimotion->stop();
     spinanimotion->stop();
 }
 
@@ -153,11 +155,11 @@ void birditem::falling()
     {
     spinanimotion->stop();
 
-    fallanimotion->setStartValue(y());
-    fallanimotion->setEndValue(groundline);
-    fallanimotion->setEasingCurve(QEasingCurve::InQuad);
-    fallanimotion->setDuration(1100);
-    fallanimotion->start();
+    yanimotion->setStartValue(y());
+    yanimotion->setEndValue(groundline);
+    yanimotion->setEasingCurve(QEasingCurve::InQuad);
+    yanimotion->setDuration(1100);
+    yanimotion->start();
 
     spinanimotion->setStartValue(rotation());
     spinanimotion->setEndValue(90);

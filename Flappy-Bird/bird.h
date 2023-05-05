@@ -9,7 +9,7 @@ class birditem : public QObject , public QGraphicsPixmapItem
 {
     Q_OBJECT
     Q_PROPERTY(qreal y READ y WRITE sety)
-    Q_PROPERTY(qreal rotation READ rotation WRITE setRotation)
+    Q_PROPERTY(qreal rotation READ rotation WRITE setrotation)
 public:
     explicit birditem(QPixmap pixmap,QObject *parent = nullptr);
     void wings();
@@ -18,7 +18,7 @@ public:
     //鸟的当前位置
     qreal rotation() const;
     //鸟的当前旋转角度
-    void jump();
+    void leap();
 
     void birdstart();
 
@@ -38,7 +38,7 @@ public slots:
 private:
     bool wingdirect;//0 下 1 上
     int wingpos;//0 向上 1 中間 2 向下
-    QPropertyAnimation* fallanimotion;
+    QPropertyAnimation* yanimotion;
     QPropertyAnimation* spinanimotion;
     qreal m_y;
     qreal m_rotation;

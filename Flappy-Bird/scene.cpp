@@ -1,7 +1,7 @@
-#include "scene.h"
+#include <scene.h>
 #include <QMouseEvent>
 #include <bird.h>
-#include "background.h"
+#include <background.h>
 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),startsign(0),gameoverbool(0),score(0)
 {
@@ -19,14 +19,15 @@ Scene::Scene(QObject *parent) : QGraphicsScene(parent),startsign(0),gameoverbool
 
     ground = new groundItem;
        addItem(ground);
-          ground->setZValue(10); // 设置Z值为10，放在最上面
+          ground->setZValue(10); // 设置Z值为大于0，放在背景之上
 }
 
 void Scene::birddef()
 {
     bird = new birditem(QPixmap(":/new/prefix1/bird01.png"));
     addItem(bird);
-    bird->setZValue(200);
+    bird->setPos(0,250);
+    bird->setZValue(300);
 }
 
 void Scene::mainstart()
@@ -34,7 +35,8 @@ void Scene::mainstart()
     startsign=1;
     removeItem(startImage);
         delete startImage;
-bird->birdstart();
+    bird->birdstart();
+    bird->setPos(0,250);
 if(!pipetimer->isActive()){
     pipetimer->start(2000);
 }
@@ -113,10 +115,10 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(!gameoverbool)
     {
 if(event->button()==Qt::LeftButton){
-    bird->jump();
+    bird->leap();
 }
 if(event->button()==Qt::RightButton){
-    bird->jump();
+    bird->leap();
 //若游戏已结束 则鼠标左键不再有任何作用
     }
 QGraphicsScene::mousePressEvent(event);
