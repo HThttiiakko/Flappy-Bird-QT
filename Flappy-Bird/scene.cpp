@@ -2,6 +2,9 @@
 #include <QMouseEvent>
 #include <bird.h>
 #include <background.h>
+#include <QMediaPlaylist>
+#include <QMediaPlayer>
+
 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),startsign(0),gameoverbool(0),score(0)
 {
@@ -42,8 +45,23 @@ if(!pipetimer->isActive()){
 }
 }
 
+
+void Scene::pointsoundEvent(QMediaPlayer *pointsoundPlayer)
+{
+    pointmusicList = new QMediaPlaylist(this);  //添加音乐列表
+    pointmusicList->addMedia(QUrl("qrc:/music01/pointsound .mp3")) ; //添加音乐列表
+
+    pointsoundPlayer = new QMediaPlayer(this);  //创建音乐播放器
+    pointsoundPlayer->setPlaylist(pointmusicList);  //设置音乐列表
+    pointsoundPlayer->setVolume(50);
+    pointsoundPlayer->play();
+}
+
+
+
 void Scene::Scoreadd()
 {
+    pointsoundEvent(pointsoundPlayer);//加大分音效
     score++;
 }
 
@@ -66,11 +84,26 @@ void Scene::setpipetimer()
  });
 }
 
+
+void Scene::hitsoundEvent(QMediaPlayer *hitsoundPlayer)
+{
+    hitmusicList = new QMediaPlaylist(this);  //添加音乐列表
+    hitmusicList->addMedia(QUrl("qrc:/music01/hitsound .mp3")) ; //添加音乐列表
+
+    hitsoundPlayer = new QMediaPlayer(this);  //创建音乐播放器
+    hitsoundPlayer->setPlaylist(hitmusicList);  //设置音乐列表
+    hitsoundPlayer->setVolume(50);
+    hitsoundPlayer->play();
+
+}
+
+
 void Scene::gameover()
 {
     gameoverbool=1; //已结束游戏
     bird->birdstop();   //鸟停止运动
     ground->groundstop();   //地板停止运动
+    hitsoundEvent(hitsoundPlayer);//发出撞击声
     showscore();
 
     addItem(gameoverImage);
@@ -107,6 +140,19 @@ void Scene::showscore()
     scoretext->setPos(35 ,280);
 }
 
+
+void Scene::flysoundEvent(QMediaPlayer *flysoundPlayer)
+{
+    flymusicList = new QMediaPlaylist(this);  //添加音乐列表
+    flymusicList->addMedia(QUrl("qrc:/music01/flysound .mp3")) ; //添加音乐列表
+
+    flysoundPlayer = new QMediaPlayer(this);  //创建音乐播放器
+    flysoundPlayer->setPlaylist(flymusicList);  //设置音乐列表
+    flysoundPlayer->setVolume(50);
+    flysoundPlayer->play();
+}
+
+
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(startsign==0)
@@ -115,12 +161,13 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(!gameoverbool)
     {
 if(event->button()==Qt::LeftButton){
+    flysoundEvent(flysoundPlayer);
     bird->leap();
 }
 if(event->button()==Qt::RightButton){
+    flysoundEvent(flysoundPlayer);
     bird->leap();
-//若游戏已结束 则鼠标左键不再有任何作用
     }
-QGraphicsScene::mousePressEvent(event);
+QGraphicsScene::mousePressEvent(event);//若游戏已结束 则鼠标左右键不再有任何作用
     }
 }

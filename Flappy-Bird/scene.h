@@ -9,6 +9,8 @@
 #include <background.h>
 #include <QGraphicsPixmapItem>
 #include <QMouseEvent>
+#include <QMediaPlaylist>
+#include <QMediaPlayer>
 
 class Scene : public QGraphicsScene
 {
@@ -18,6 +20,7 @@ public:
     void birddef();
     void mainstart();
     void Scoreadd();
+
 
 signals:
 
@@ -34,11 +37,19 @@ private:
     int score;
     QGraphicsTextItem* scoretext;
     void showscore();
-
+    QMediaPlaylist * flymusicList;
+    QMediaPlayer* flysoundPlayer;
+    QMediaPlaylist * hitmusicList;
+    QMediaPlayer* hitsoundPlayer;
+    QMediaPlaylist * pointmusicList;
+    QMediaPlayer* pointsoundPlayer;
 public slots:
 
     // QGraphicsScene interface
 protected:
+    void pointsoundEvent(QMediaPlayer* pointsoundPlayer);
+    void hitsoundEvent(QMediaPlayer* hitsoundPlayer);
+    void flysoundEvent(QMediaPlayer* flysoundPlayer);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 };
 

@@ -55,6 +55,7 @@ void PipeItem::setX(qreal x)
                 if(nowscene){
                     score++;
                     myscene->Scoreadd();
+
                 }
     }
 
@@ -75,6 +76,7 @@ void PipeItem::setX(qreal x)
     }
     setPos(x,ramy);
 }
+
 
 //碰撞检测函数
 bool PipeItem::collision()

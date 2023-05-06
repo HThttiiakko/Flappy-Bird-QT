@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/music01">
+        <file>flysound .mp3</file>
+        <file>hitsound .mp3</file>
+        <file>flysound.wav</file>
+        <file>pointsound .mp3</file>
+    </qresource>
+</RCC>

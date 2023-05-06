@@ -9,5 +9,7 @@
         <file>bird02.png</file>
         <file>bird03.png</file>
         <file>background01.png</file>
+        <file>flysound .mp3</file>
+        <file>hitsound .mp3</file>
     </qresource>
 </RCC>
